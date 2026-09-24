@@ -6,7 +6,7 @@
 <style>
     .page-header {
         background: linear-gradient(rgba(26, 58, 92, 0.75), rgba(26, 58, 92, 0.85)),
-                    url('https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+                    url("{{ asset('images/gallery.svg') }}") center/cover no-repeat;
         padding: 5rem 0;
         text-align: center;
         color: #fff;
@@ -41,7 +41,7 @@
             @forelse($rooms as $room)
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-room">
-                        <img src="{{ $room->image ? asset($room->image) : 'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800' }}" alt="{{ $room->name }}">
+                        <img src="{{ $room->image && str_starts_with($room->image, 'http') ? $room->image : asset($room->image ? 'uploads/rooms/' . $room->image : 'images/room.svg') }}" alt="{{ $room->name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $room->name }}</h5>
                             <p class="text-muted small">{{ Str::limit($room->description, 100) }}</p>

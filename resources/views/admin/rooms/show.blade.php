@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         @if($room->image)
-                            <img src="{{ asset($room->image) }}" alt="{{ $room->name }}" class="img-fluid rounded mb-3" style="width: 100%; max-height: 300px; object-fit: cover;">
+                            <img src="{{ image_url($room->image) }}" alt="{{ $room->name }}" class="img-fluid rounded mb-3" style="width: 100%; max-height: 300px; object-fit: cover;">
                         @else
                             <div class="bg-light text-center p-5 rounded mb-3">
                                 <i class="fas fa-image fa-3x text-muted"></i>

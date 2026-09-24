@@ -32,7 +32,7 @@
             <div class="col">
                 <div class="card h-100 shadow-sm">
                     @if($item->image)
-                        <img src="{{ asset('uploads/gallery/' . $item->image) }}" class="card-img-top" alt="{{ $item->title }}" style="height: 200px; object-fit: cover;">
+                        <img src="{{ image_url($item->image) }}" class="card-img-top" alt="{{ $item->title }}" style="height: 200px; object-fit: cover;">
                     @else
                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
                             <span class="text-muted">No Image</span>

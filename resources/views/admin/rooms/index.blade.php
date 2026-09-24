@@ -52,7 +52,7 @@
                         <td>{{ $room->capacity }}</td>
                         <td>
                             @if($room->image)
-                                <img src="{{ asset($room->image) }}" alt="{{ $room->name }}" class="img-thumbnail" width="80" height="80" style="object-fit: cover;">
+                                <img src="{{ image_url($room->image) }}" alt="{{ $room->name }}" class="img-thumbnail" width="80" height="80" style="object-fit: cover;">
                             @else
                                 <span class="text-muted">No Image</span>
                             @endif

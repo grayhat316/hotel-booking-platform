@@ -6,7 +6,7 @@
 <style>
     .hero-section {
         background: linear-gradient(rgba(26, 58, 92, 0.55), rgba(26, 58, 92, 0.65)),
-                    url('https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+                    url("{{ asset('images/gallery.svg') }}") center/cover no-repeat;
         min-height: 90vh;
         display: flex;
         align-items: center;
@@ -58,7 +58,7 @@
 
     .cta-banner {
         background: linear-gradient(rgba(26, 58, 92, 0.85), rgba(26, 58, 92, 0.9)),
-                    url('https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat fixed;
+                    url("{{ asset('images/gallery.svg') }}") center/cover no-repeat fixed;
         padding: 4rem 2rem;
         text-align: center;
         color: #fff;
@@ -100,7 +100,7 @@
             @forelse($rooms->take(3) as $room)
                 <div class="col-md-4">
                     <div class="card card-room">
-                        <img src="{{ $room->image ? asset($room->image) : 'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800' }}" alt="{{ $room->name }}">
+                        <img src="{{ $room->image && str_starts_with($room->image, 'http') ? $room->image : asset($room->image ? 'uploads/rooms/' . $room->image : 'images/room.svg') }}" alt="{{ $room->name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $room->name }}</h5>
                             <p class="text-muted small">{{ Str::limit($room->description, 80) }}</p>
@@ -132,7 +132,7 @@
             @forelse($foods->take(4) as $food)
                 <div class="col-md-3">
                     <div class="card card-room">
-                        <img src="{{ $food->image ? asset($food->image) : 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800' }}" alt="{{ $food->name }}" class="featured-food-img">
+                        <img src="{{ $food->image && str_starts_with($food->image, 'http') ? $food->image : asset($food->image ? 'uploads/foods/' . $food->image : 'images/food.svg') }}" alt="{{ $food->name }}" class="featured-food-img">
                         <div class="card-body">
                             <h5 class="card-title">{{ $food->name }}</h5>
                             <p class="text-muted small">{{ Str::limit($food->description, 60) }}</p>

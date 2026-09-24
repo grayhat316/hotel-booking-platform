@@ -15,7 +15,7 @@
             <div class="card-body">
                 @if($gallery->image)
                     <div class="text-center mb-4">
-                        <img src="{{ asset('uploads/gallery/' . $gallery->image) }}" alt="{{ $gallery->title }}" class="img-fluid rounded" style="max-height: 400px;">
+                        <img src="{{ image_url($gallery->image) }}" alt="{{ $gallery->title }}" class="img-fluid rounded" style="max-height: 400px;">
                     </div>
                 @else
                     <div class="text-center mb-4 bg-light rounded py-5">

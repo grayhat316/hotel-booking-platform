@@ -6,7 +6,7 @@
 <style>
     .page-header {
         background: linear-gradient(rgba(26, 58, 92, 0.75), rgba(26, 58, 92, 0.85)),
-                    url('https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+                    url("{{ asset('images/gallery.svg') }}") center/cover no-repeat;
         padding: 5rem 0;
         text-align: center;
         color: #fff;

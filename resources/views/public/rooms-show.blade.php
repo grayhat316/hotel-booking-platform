@@ -6,7 +6,7 @@
 <style>
     .page-header {
         background: linear-gradient(rgba(26, 58, 92, 0.75), rgba(26, 58, 92, 0.85)),
-                    url('https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+                    url("{{ asset('images/gallery.svg') }}") center/cover no-repeat;
         padding: 5rem 0;
         text-align: center;
         color: #fff;
@@ -58,7 +58,7 @@
         <div class="row g-5">
             <!-- Image -->
             <div class="col-lg-7">
-                <img src="{{ $room->image ? asset($room->image) : 'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800' }}" alt="{{ $room->name }}" class="room-detail-img">
+                <img src="{{ $room->image && str_starts_with($room->image, 'http') ? $room->image : asset($room->image ? 'uploads/rooms/' . $room->image : 'images/room.svg') }}" alt="{{ $room->name }}" class="room-detail-img">
             </div>
             <!-- Info -->
             <div class="col-lg-5">
@@ -109,7 +109,7 @@
             @foreach($relatedRooms as $related)
                 <div class="col-md-4">
                     <div class="card card-room">
-                        <img src="{{ $related->image ? asset($related->image) : 'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800' }}" alt="{{ $related->name }}" class="related-img">
+                        <img src="{{ $related->image && str_starts_with($related->image, 'http') ? $related->image : asset($related->image ? 'uploads/rooms/' . $related->image : 'images/room.svg') }}" alt="{{ $related->name }}" class="related-img">
                         <div class="card-body">
                             <h5 class="card-title">{{ $related->name }}</h5>
                             <p class="text-muted small">{{ Str::limit($related->description, 80) }}</p>

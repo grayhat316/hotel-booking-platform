@@ -55,7 +55,7 @@
                         @if($service->image)
                         <div class="mt-2">
                             <small class="text-muted">Current image:</small>
-                            <img src="{{ asset('uploads/services/' . $service->image) }}" alt="{{ $service->name }}" class="img-thumbnail mt-1" style="max-height: 100px;">
+                            <img src="{{ image_url($service->image) }}" alt="{{ $service->name }}" class="img-thumbnail mt-1" style="max-height: 100px;">
                         </div>
                         @endif
                     </div>

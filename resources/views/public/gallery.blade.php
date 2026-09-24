@@ -6,7 +6,7 @@
 <style>
     .page-header {
         background: linear-gradient(rgba(26, 58, 92, 0.75), rgba(26, 58, 92, 0.85)),
-                    url('https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+                    url("{{ asset('images/gallery.svg') }}") center/cover no-repeat;
         padding: 5rem 0;
         text-align: center;
         color: #fff;
@@ -144,10 +144,10 @@
         <div class="gallery-grid">
             @forelse($gallery as $item)
                 <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#lightboxModal"
-                     data-image="{{ $item->image ? asset($item->image) : 'https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800' }}"
+                     data-image="{{ $item->image && str_starts_with($item->image, 'http') ? $item->image : asset($item->image ? 'uploads/gallery/' . $item->image : 'images/gallery.svg') }}"
                      data-title="{{ $item->title }}"
                      data-description="{{ $item->description }}">
-                    <img src="{{ $item->image ? asset($item->image) : 'https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800' }}" alt="{{ $item->title }}" loading="lazy">
+                    <img src="{{ $item->image && str_starts_with($item->image, 'http') ? $item->image : asset($item->image ? 'uploads/gallery/' . $item->image : 'images/gallery.svg') }}" alt="{{ $item->title }}" loading="lazy">
                     <div class="overlay">
                         <h5>{{ $item->title }}</h5>
                         @if($item->description)

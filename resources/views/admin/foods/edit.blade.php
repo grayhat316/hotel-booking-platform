@@ -46,7 +46,7 @@
                         <label for="image" class="form-label">Image</label>
                         @if($food->image)
                         <div class="mb-2">
-                            <img src="{{ asset($food->image) }}" alt="{{ $food->name }}" class="rounded" width="100" height="100" style="object-fit:cover;">
+                            <img src="{{ image_url($food->image) }}" alt="{{ $food->name }}" class="rounded" width="100" height="100" style="object-fit:cover;">
                             <div class="form-text">Current image</div>
                         </div>
                         @endif
