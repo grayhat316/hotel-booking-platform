@@ -91,28 +91,28 @@
                 <div class="contact-info-card">
                     <i class="bi bi-geo-alt-fill icon"></i>
                     <h5>Address</h5>
-                    <p>123 Grand Avenue<br>City Center, Nairobi</p>
+                    <p>123 Grand Avenue<br>Eldoret, Kenya</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="contact-info-card">
                     <i class="bi bi-telephone-fill icon"></i>
                     <h5>Phone</h5>
-                    <p>+254 (712) 345-678<br>+254 (700) 123-456</p>
+                    <p>+254 700 000 000<br>+254 700 000 001</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="contact-info-card">
                     <i class="bi bi-envelope-fill icon"></i>
                     <h5>Email</h5>
-                    <p>info@grandhotel.com<br>reservations@grandhotel.com</p>
+                    <p>info@grandhotel.co.ke<br>reservations@grandhotel.co.ke</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="contact-info-card">
                     <i class="bi bi-clock-fill icon"></i>
-                    <h5>Office Hours</h5>
-                    <p>Front Desk: 24/7<br>Admin: 8am - 6pm</p>
+                    <h5>Hours</h5>
+                    <p>Open 24 hours<br>7 days a week</p>
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                                <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}" placeholder="+254 7XX XXX XXX">
+                                <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}" placeholder="+254 700 000 000">
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

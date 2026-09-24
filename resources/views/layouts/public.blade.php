@@ -302,10 +302,10 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Contact Info</h5>
                     <ul class="list-unstyled text-secondary">
-                        <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-gold"></i>123 Grand Avenue, City Center</li>
-                        <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-gold"></i>+1 (555) 123-4567</li>
-                        <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-gold"></i>info@grandhotel.com</li>
-                        <li class="mb-2"><i class="bi bi-clock-fill me-2 text-gold"></i>24/7 Front Desk</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-gold"></i>123 Grand Avenue, Eldoret, Kenya</li>
+                        <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-gold"></i>+254 700 000 000</li>
+                        <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-gold"></i>info@grandhotel.co.ke</li>
+                        <li class="mb-2"><i class="bi bi-clock-fill me-2 text-gold"></i>Open 24 hours, 7 days a week</li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">

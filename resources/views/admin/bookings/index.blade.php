@@ -9,7 +9,7 @@
         <h2><i class="fas fa-calendar-check me-2"></i>Bookings Management</h2>
     </div>
     <div class="col-md-4 text-end">
-        <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary">
+        <a href="{{ url('/admin/bookings') }}" class="btn btn-secondary">
             <i class="fas fa-sync-alt me-1"></i>Refresh
         </a>
     </div>
@@ -35,7 +35,7 @@
             <table class="table table-hover mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th>#</th>
+                        <th>ID</th>
                         <th>Guest</th>
                         <th>Room</th>
                         <th>Check-in</th>
@@ -43,7 +43,7 @@
                         <th>Guests</th>
                         <th>Total</th>
                         <th>Status</th>
-                        <th width="220">Actions</th>
+                        <th width="250">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,24 +57,65 @@
                         <td>{{ $booking->guests }}</td>
                         <td>KES {{ number_format($booking->total_price, 0) }}</td>
                         <td>
-                            <span class="badge bg-{{ $booking->status === 'confirmed' ? 'success' : ($booking->status === 'pending' ? 'warning' : ($booking->status === 'cancelled' ? 'danger' : 'secondary')) }}">
+                            <span class="badge {{ $booking->status === 'confirmed' ? 'bg-success' : ($booking->status === 'pending' ? 'bg-warning text-dark' : ($booking->status === 'cancelled' ? 'bg-danger' : 'bg-info')) }}">
                                 {{ ucfirst($booking->status) }}
                             </span>
                         </td>
                         <td>
-                            <a href="{{ route('admin.bookings.show', $booking->id) }}" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye"></i> Show
+                            <a href="{{ url('/admin/bookings/' . $booking->id) }}" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i> View
                             </a>
-                            <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this booking?');">
-                                    <i class="fas fa-trash"></i> Delete
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-edit"></i> Edit
                                 </button>
-                            </form>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form action="{{ url('/admin/bookings/' . $booking->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="check_in" value="{{ \Carbon\Carbon::parse($booking->check_in)->format('Y-m-d') }}">
+                                            <input type="hidden" name="check_out" value="{{ \Carbon\Carbon::parse($booking->check_out)->format('Y-m-d') }}">
+                                            <input type="hidden" name="guests" value="{{ $booking->guests }}">
+                                            <input type="hidden" name="status" value="pending">
+                                            <button type="submit" class="dropdown-item text-warning"><i class="fas fa-circle fa-xs"></i> Set Pending</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="{{ url('/admin/bookings/' . $booking->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="check_in" value="{{ \Carbon\Carbon::parse($booking->check_in)->format('Y-m-d') }}">
+                                            <input type="hidden" name="check_out" value="{{ \Carbon\Carbon::parse($booking->check_out)->format('Y-m-d') }}">
+                                            <input type="hidden" name="guests" value="{{ $booking->guests }}">
+                                            <input type="hidden" name="status" value="confirmed">
+                                            <button type="submit" class="dropdown-item text-success"><i class="fas fa-circle fa-xs"></i> Set Confirmed</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="{{ url('/admin/bookings/' . $booking->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="check_in" value="{{ \Carbon\Carbon::parse($booking->check_in)->format('Y-m-d') }}">
+                                            <input type="hidden" name="check_out" value="{{ \Carbon\Carbon::parse($booking->check_out)->format('Y-m-d') }}">
+                                            <input type="hidden" name="guests" value="{{ $booking->guests }}">
+                                            <input type="hidden" name="status" value="cancelled">
+                                            <button type="submit" class="dropdown-item text-danger"><i class="fas fa-circle fa-xs"></i> Set Cancelled</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="{{ url('/admin/bookings/' . $booking->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="check_in" value="{{ \Carbon\Carbon::parse($booking->check_in)->format('Y-m-d') }}">
+                                            <input type="hidden" name="check_out" value="{{ \Carbon\Carbon::parse($booking->check_out)->format('Y-m-d') }}">
+                                            <input type="hidden" name="guests" value="{{ $booking->guests }}">
+                                            <input type="hidden" name="status" value="completed">
+                                            <button type="submit" class="dropdown-item text-info"><i class="fas fa-circle fa-xs"></i> Set Completed</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                     @empty

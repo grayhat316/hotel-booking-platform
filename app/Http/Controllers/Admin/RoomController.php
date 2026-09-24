@@ -35,12 +35,15 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'capacity' => 'required|integer|min:1',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|string|max:2048',
+            'image_url' => 'nullable|url|max:2048',
         ]);
 
         $data = $request->all();
 
-        if ($request->hasFile('image')) {
+        if ($request->has('image_url') && $request->input('image_url')) {
+            $data['image'] = $request->input('image_url');
+        } elseif ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/rooms'), $imageName);
@@ -79,14 +82,17 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'capacity' => 'required|integer|min:1',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|string|max:2048',
+            'image_url' => 'nullable|url|max:2048',
         ]);
 
         $data = $request->all();
 
-        if ($request->hasFile('image')) {
+        if ($request->has('image_url') && $request->input('image_url')) {
+            $data['image'] = $request->input('image_url');
+        } elseif ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($room->image && file_exists(public_path($room->image))) {
+            if ($room->image && !str_starts_with($room->image, 'http') && file_exists(public_path($room->image))) {
                 unlink(public_path($room->image));
             }
             $image = $request->file('image');

@@ -5,9 +5,9 @@
 @push('styles')
 <style>
     .page-header {
-        background: linear-gradient(rgba(26, 58, 92, 0.75), rgba(26, 58, 92, 0.85)),
+        background: linear-gradient(rgba(26, 58, 92, 0.80), rgba(26, 58, 92, 0.90)),
                     url("{{ asset('images/gallery.svg') }}") center/cover no-repeat;
-        padding: 5rem 0;
+        padding: 6rem 0;
         text-align: center;
         color: #fff;
     }
@@ -19,53 +19,77 @@
     }
 
     .page-header p {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         font-weight: 300;
+        opacity: 0.9;
     }
 
-    .event-card {
+    .service-card {
         border: none;
-        border-radius: 0.5rem;
+        border-radius: 0.75rem;
         overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
         height: 100%;
         background: #fff;
+        position: relative;
     }
 
-    .event-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 35px rgba(201, 169, 110, 0.18);
     }
 
-    .event-card .card-body {
-        padding: 1.75rem;
+    .service-card .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.4s ease;
     }
 
-    .event-card .card-title {
+    .service-card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    .service-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .service-card .card-title {
         color: var(--navy);
-        font-size: 1.25rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
     }
 
-    .event-card .capacity-badge {
+    .service-card .card-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .service-card .capacity-badge {
         background-color: var(--gold);
         color: #fff;
         padding: 0.25rem 0.75rem;
         border-radius: 1rem;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
     }
 
-    .event-card .price {
+    .service-card .price-tag {
         color: var(--navy);
         font-weight: 700;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
     }
 
     .cta-events {
         background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-        border-radius: 0.5rem;
-        padding: 3rem 2rem;
+        border-radius: 0.75rem;
+        padding: 3.5rem 2rem;
         text-align: center;
         color: #fff;
     }
@@ -82,7 +106,7 @@
 <section class="page-header">
     <div class="container">
         <h1>Event Spaces</h1>
-        <p>Beautiful venues for unforgettable celebrations</p>
+        <p>Beautiful venues for unforgettable celebrations and occasions</p>
     </div>
 </section>
 
@@ -95,25 +119,30 @@
             <p class="text-muted mt-2">Elegant spaces for weddings, galas, and celebrations</p>
         </div>
         <div class="row g-4">
-            @forelse($services->where('type', 'event') as $service)
+            @forelse($services as $service)
                 <div class="col-lg-4 col-md-6">
-                    <div class="event-card">
+                    <div class="service-card">
+                        <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="card-img-top">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h5 class="card-title mb-0">{{ $service->name }}</h5>
-                                <span class="capacity-badge"><i class="bi bi-people-fill me-1"></i>{{ $service->capacity ?? 100 }}</span>
                             </div>
-                            <p class="text-muted">{{ Str::limit($service->description, 120) }}</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="price">KES {{ number_format($service->price, 0) }}</span>
-                                <a href="{{ url('/contact') }}" class="btn btn-outline-gold btn-sm">Inquire</a>
+                            <p class="card-text text-muted mb-3">{{ Str::limit($service->description, 100) }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="capacity-badge"><i class="bi bi-people-fill"></i>{{ $service->capacity ?? 'N/A' }}</span>
+                                <span class="price-tag"><i class="bi bi-tag-fill"></i>KES {{ number_format($service->price, 0) }}</span>
                             </div>
+                            <a href="{{ url('/contact') }}" class="btn btn-gold btn-sm w-100 mt-3">
+                                <i class="bi bi-envelope me-1"></i>Book Inquiry
+                            </a>
                         </div>
                     </div>
                 </div>
             @empty
-                <div class="col-12 text-center">
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-calendar-x fs-1 text-muted mb-3 d-block"></i>
                     <p class="text-muted fs-5">No event spaces available at the moment.</p>
+                    <a href="{{ url('/contact') }}" class="btn btn-outline-gold">Contact Us for Availability</a>
                 </div>
             @endforelse
         </div>
@@ -125,8 +154,10 @@
     <div class="container">
         <div class="cta-events">
             <h2>Host Your Dream Event With Us</h2>
-            <p class="mb-4">Let our dedicated team bring your vision to life.</p>
-            <a href="{{ url('/contact') }}" class="btn btn-navy btn-lg">Plan Your Event</a>
+            <p class="mb-4">Let our dedicated team bring your vision to life, from décor to catering.</p>
+            <a href="{{ url('/contact') }}" class="btn btn-navy btn-lg">
+                <i class="bi bi-chat-dots me-2"></i>Plan Your Event
+            </a>
         </div>
     </div>
 </section>

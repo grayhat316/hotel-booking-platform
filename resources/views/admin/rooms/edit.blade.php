@@ -1,3 +1,4 @@
+
 @extends('layouts.admin')
 
 @section('title', 'Edit Room')
@@ -22,7 +23,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.rooms.update', $room->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin/rooms/' . $room->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -67,27 +68,59 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="image" class="form-label">
+                        <label class="form-label">
                             <i class="fas fa-image me-1"></i> Room Image
                         </label>
+
                         @if($room->image)
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <img src="{{ $room->image_url }}" alt="{{ $room->name }}" class="img-thumbnail" width="150" height="150" style="object-fit: cover;">
                                 <p class="text-muted small mt-1">Current image</p>
                             </div>
                         @endif
-                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
-                        <small class="text-muted">Leave empty to keep current image.</small>
-                        @error('image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+
+                        <!-- Toggle Switch -->
+                        <div class="d-flex mb-3">
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="image_type" id="typeUpload" value="upload" checked>
+                                <label class="btn btn-outline-primary" for="typeUpload">
+                                    <i class="fas fa-upload me-1"></i> Upload File
+                                </label>
+                                
+                                <input type="radio" class="btn-check" name="image_type" id="typeUrl" value="url">
+                                <label class="btn btn-outline-primary" for="typeUrl">
+                                    <i class="fas fa-link me-1"></i> Paste URL
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Upload Input -->
+                        <div id="uploadSection">
+                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
+                            <small class="text-muted">Upload a new image to replace the current one.</small>
+                            @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- URL Input -->
+                        <div id="urlSection" style="display: none;">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-link"></i></span>
+                                <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" placeholder="https://example.com/image.jpg" value="{{ old('image_url') }}">
+                            </div>
+                            <small class="text-muted">Paste a URL to replace the current image (e.g., from Unsplash).</small>
+                            @error('image_url')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save me-1"></i> Update Room
                         </button>
-                        <a href="{{ route('admin.rooms.index') }}" class="btn btn-secondary">
+                        <a href="{{ url('admin/rooms') }}" class="btn btn-secondary">
                             <i class="fas fa-times me-1"></i> Cancel
                         </a>
                     </div>
@@ -97,3 +130,28 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const typeUpload = document.getElementById('typeUpload');
+        const typeUrl = document.getElementById('typeUrl');
+        const uploadSection = document.getElementById('uploadSection');
+        const urlSection = document.getElementById('urlSection');
+
+        typeUpload.addEventListener('change', function() {
+            if (this.checked) {
+                uploadSection.style.display = 'block';
+                urlSection.style.display = 'none';
+            }
+        });
+
+        typeUrl.addEventListener('change', function() {
+            if (this.checked) {
+                uploadSection.style.display = 'none';
+                urlSection.style.display = 'block';
+            }
+        });
+    });
+</script>
+@endpush
