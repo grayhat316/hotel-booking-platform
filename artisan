@@ -1,0 +1,56 @@
+#!/usr/bin/env php
+<?php
+
+use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Artisan;
+
+/*
+|--------------------------------------------------------------------------
+| Register The Auto Loader
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader for
+| our application. We just need to utilize it! We'll require it into
+| the script here so that we do not have to worry about the loading of
+| any of our classes manually. Composer is responsible for loading
+| the rest.
+|
+*/
+
+require __DIR__.'/vendor/autoload.php';
+
+$app = require_once __DIR__.'/bootstrap/app.php';
+
+/*
+|--------------------------------------------------------------------------
+| Run The Artisan Application
+|--------------------------------------------------------------------------
+|
+| When we run the console application, the current CLI command will be
+| read into the console application and the result displayed on the
+| console.
+|
+*/
+
+$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+
+$status = $kernel->handle(
+    $input = new Symfony\Component\Console\Input\ArgvInput,
+    $output = new Symfony\Component\Console\Output\ConsoleOutput
+);
+
+/*
+|--------------------------------------------------------------------------
+| Shutdown The Application
+|--------------------------------------------------------------------------
+|
+| Once the application has run, we will call the "terminate" method on
+| the console application so that it can perform any clean-up
+| operations. This is the most reliable way to avoid hurting the
+| application's lifecycle, but we do see when Artisan terminates.
+|
+*/
+
+$kernel->terminate($input, $output);
+
+exit($status);
