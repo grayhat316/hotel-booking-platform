@@ -49,7 +49,7 @@
                         @enderror
                         @if($gallery->image)
                             <small class="text-muted d-block mt-2">Current image:</small>
-                            <img src="{{ image_url($gallery->image) }}" alt="{{ $gallery->title }}" class="img-thumbnail mt-1" style="max-height: 150px;">
+                            <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}" class="img-thumbnail mt-1" style="max-height: 150px;">
                         @endif
                     </div>
 

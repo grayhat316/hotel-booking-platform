@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-5 text-center mb-3 mb-md-0">
                         @if($food->image)
-                            <img src="{{ image_url($food->image) }}" alt="{{ $food->name }}" class="img-fluid rounded shadow-sm" style="max-height:250px;object-fit:cover;width:100%;">
+                            <img src="{{ $food->image_url }}" alt="{{ $food->name }}" class="img-fluid rounded shadow-sm" style="max-height:250px;object-fit:cover;width:100%;">
                         @else
                             <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height:200px;">
                                 <i class="fas fa-image fa-4x text-muted"></i>

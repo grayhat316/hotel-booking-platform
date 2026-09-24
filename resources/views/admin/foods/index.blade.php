@@ -32,7 +32,7 @@
                         <td>{{ $food->id }}</td>
                         <td>
                             @if($food->image)
-                                <img src="{{ image_url($food->image) }}" alt="{{ $food->name }}" class="rounded" width="60" height="60" style="object-fit:cover;">
+                                <img src="{{ $food->image_url }}" alt="{{ $food->name }}" class="rounded" width="60" height="60" style="object-fit:cover;">
                             @else
                                 <span class="text-muted"><i class="fas fa-image fa-2x"></i></span>
                             @endif

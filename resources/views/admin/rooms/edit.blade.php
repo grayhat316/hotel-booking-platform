@@ -72,7 +72,7 @@
                         </label>
                         @if($room->image)
                             <div class="mb-2">
-                                <img src="{{ image_url($room->image) }}" alt="{{ $room->name }}" class="img-thumbnail" width="150" height="150" style="object-fit: cover;">
+                                <img src="{{ $room->image_url }}" alt="{{ $room->name }}" class="img-thumbnail" width="150" height="150" style="object-fit: cover;">
                                 <p class="text-muted small mt-1">Current image</p>
                             </div>
                         @endif

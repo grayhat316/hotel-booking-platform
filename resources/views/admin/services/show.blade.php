@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         @if($service->image)
-                            <img src="{{ image_url($service->image) }}" alt="{{ $service->name }}" class="img-fluid rounded w-100" style="object-fit: cover; max-height: 300px;">
+                            <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="img-fluid rounded w-100" style="object-fit: cover; max-height: 300px;">
                         @else
                             <div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 200px;">
                                 <i class="fas fa-image fa-3x text-muted"></i>
