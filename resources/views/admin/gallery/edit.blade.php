@@ -22,7 +22,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
@@ -42,11 +42,29 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="image" class="form-label">Gallery Image</label>
-                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
-                        @error('image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <label class="form-label">Gallery Image</label>
+                        <div class="mb-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="image_source" id="image_source_upload" value="upload" checked>
+                                <label class="form-check-label" for="image_source_upload">Upload File</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="image_source" id="image_source_url" value="url">
+                                <label class="form-check-label" for="image_source_url">Paste URL</label>
+                            </div>
+                        </div>
+                        <div id="upload_section">
+                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
+                            @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div id="url_section" style="display: none;">
+                            <input type="text" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" value="{{ old('image_url', $gallery->image_url) }}" placeholder="https://example.com/image.jpg">
+                            @error('image_url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                         @if($gallery->image)
                             <small class="text-muted d-block mt-2">Current image:</small>
                             <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}" class="img-thumbnail mt-1" style="max-height: 150px;">
@@ -63,3 +81,27 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const uploadRadio = document.getElementById('image_source_upload');
+        const urlRadio = document.getElementById('image_source_url');
+        const uploadSection = document.getElementById('upload_section');
+        const urlSection = document.getElementById('url_section');
+
+        function toggleImageSource() {
+            if (urlRadio.checked) {
+                uploadSection.style.display = 'none';
+                urlSection.style.display = 'block';
+            } else {
+                uploadSection.style.display = 'block';
+                urlSection.style.display = 'none';
+            }
+        }
+
+        uploadRadio.addEventListener('change', toggleImageSource);
+        urlRadio.addEventListener('change', toggleImageSource);
+    });
+</script>
+@endpush

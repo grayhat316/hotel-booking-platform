@@ -36,15 +36,21 @@ class FoodController extends Controller
             'price' => 'required|numeric|min:0',
             'category' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|url',
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['name', 'description', 'price', 'category', 'image']);
 
+        // Priority: file upload over URL
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/foods'), $imageName);
             $data['image'] = 'uploads/foods/' . $imageName;
+        } elseif ($request->filled('image_url')) {
+            $data['image'] = $request->input('image_url');
+        } else {
+            $data['image'] = null;
         }
 
         Food::create($data);
@@ -80,21 +86,29 @@ class FoodController extends Controller
             'price' => 'required|numeric|min:0',
             'category' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|url',
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['name', 'description', 'price', 'category']);
 
+        // Priority: file upload over URL
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($food->image && file_exists(public_path($food->image))) {
+            // Delete old file-based image if exists
+            if ($food->image && !str_starts_with($food->image, 'http') && file_exists(public_path($food->image))) {
                 unlink(public_path($food->image));
             }
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/foods'), $imageName);
             $data['image'] = 'uploads/foods/' . $imageName;
+        } elseif ($request->filled('image_url')) {
+            $data['image'] = $request->input('image_url');
+        } elseif ($request->has('image_url') && $request->input('image_url') === null) {
+            // image_url explicitly cleared
+            $data['image'] = null;
         } else {
-            unset($data['image']);
+            // Neither provided, keep existing
+            $data['image'] = $food->image;
         }
 
         $food->update($data);
@@ -108,7 +122,7 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
-        if ($food->image && file_exists(public_path($food->image))) {
+        if ($food->image && !str_starts_with($food->image, 'http') && file_exists(public_path($food->image))) {
             unlink(public_path($food->image));
         }
         $food->delete();

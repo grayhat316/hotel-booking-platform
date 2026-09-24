@@ -37,11 +37,14 @@ class ServiceController extends Controller
             'type' => 'nullable|string|max:100',
             'capacity' => 'nullable|integer|min:1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|url',
         ]);
 
         $data = $request->all();
 
-        if ($request->hasFile('image')) {
+        if ($request->filled('image_url')) {
+            $data['image'] = $request->input('image_url');
+        } elseif ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/services'), $imageName);
@@ -82,13 +85,20 @@ class ServiceController extends Controller
             'type' => 'nullable|string|max:100',
             'capacity' => 'nullable|integer|min:1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|url',
         ]);
 
         $data = $request->all();
 
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($service->image && file_exists(public_path($service->image))) {
+        if ($request->filled('image_url')) {
+            // Delete old local image if it was a stored file
+            if ($service->image && !filter_var($service->image, FILTER_VALIDATE_URL) && file_exists(public_path($service->image))) {
+                unlink(public_path($service->image));
+            }
+            $data['image'] = $request->input('image_url');
+        } elseif ($request->hasFile('image')) {
+            // Delete old local image if it was a stored file
+            if ($service->image && !filter_var($service->image, FILTER_VALIDATE_URL) && file_exists(public_path($service->image))) {
                 unlink(public_path($service->image));
             }
             $image = $request->file('image');
@@ -110,7 +120,7 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        if ($service->image && file_exists(public_path($service->image))) {
+        if ($service->image && !filter_var($service->image, FILTER_VALIDATE_URL) && file_exists(public_path($service->image))) {
             unlink(public_path($service->image));
         }
         $service->delete();

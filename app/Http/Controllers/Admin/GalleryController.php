@@ -33,7 +33,8 @@ class GalleryController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|url',
         ]);
 
         $data = $request->all();
@@ -43,6 +44,8 @@ class GalleryController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/gallery'), $imageName);
             $data['image'] = 'uploads/gallery/' . $imageName;
+        } elseif ($request->filled('image_url')) {
+            $data['image'] = $request->input('image_url');
         }
 
         Gallery::create($data);
@@ -75,7 +78,8 @@ class GalleryController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|url',
         ]);
 
         $data = $request->all();
@@ -89,6 +93,12 @@ class GalleryController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/gallery'), $imageName);
             $data['image'] = 'uploads/gallery/' . $imageName;
+        } elseif ($request->filled('image_url')) {
+            // Delete old image if exists and it's a local file
+            if ($gallery->image && file_exists(public_path($gallery->image))) {
+                unlink(public_path($gallery->image));
+            }
+            $data['image'] = $request->input('image_url');
         }
 
         $gallery->update($data);
