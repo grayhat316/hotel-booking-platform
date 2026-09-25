@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="E88CKtuUq2onQX8iTGjpHEXFqC5Ft4IEQ6TPl529">
+    <title>Welcome - The Grand Hotel &amp; Spa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e0c98e;
+            --gold-dark: #a88b4f;
+            --navy: #1a3a5c;
+            --navy-light: #2a4a6c;
+            --navy-dark: #0f2a4c;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navbar */
+        .navbar-public {
+            background-color: var(--navy) !important;
+            padding: 0.75rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold) !important;
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand:hover {
+            color: var(--gold-light) !important;
+        }
+
+        .navbar-public .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-public .nav-link:hover,
+        .navbar-public .nav-link.active {
+            color: var(--gold) !important;
+        }
+
+        .navbar-toggler {
+            border-color: var(--gold);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23c9a96e' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Buttons */
+        .btn-gold {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.6rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--gold-dark);
+            border-color: var(--gold-dark);
+            color: #fff;
+        }
+
+        .btn-navy {
+            background-color: var(--navy);
+            border-color: var(--navy);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.6rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-navy:hover {
+            background-color: var(--navy-dark);
+            border-color: var(--navy-dark);
+            color: #fff;
+        }
+
+        .btn-outline-gold {
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-weight: 600;
+            padding: 0.55rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-gold:hover {
+            background-color: var(--gold);
+            color: #fff;
+        }
+
+        /* Section headings */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-heading h2 {
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-heading .gold-line {
+            width: 60px;
+            height: 3px;
+            background-color: var(--gold);
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--navy);
+            color: #fff;
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer h5 {
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--gold);
+        }
+
+        .footer .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer .social-link:hover {
+            background-color: var(--gold);
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(201,169,110,0.2);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Cards */
+        .card-room {
+            border: none;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .card-room:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .card-room img {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-room .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-room .card-title {
+            color: var(--navy);
+            font-size: 1.25rem;
+        }
+
+        .card-room .price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Utility */
+        .text-gold { color: var(--gold) !important; }
+        .text-navy { color: var(--navy) !important; }
+        .bg-navy { background-color: var(--navy) !important; }
+        .bg-gold { background-color: var(--gold) !important; }
+    </style>
+    <style>
+    .hero-section {
+        background: linear-gradient(rgba(26, 58, 92, 0.55), rgba(26, 58, 92, 0.65)),
+                    url("https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=75") center/cover no-repeat;
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #fff;
+    }
+
+    .hero-section h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 1rem;
+    }
+
+    .hero-section .subtitle {
+        font-size: 1.25rem;
+        font-weight: 300;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .service-card {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        border-radius: 0.5rem;
+        background: #fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .service-card .service-icon {
+        font-size: 2.5rem;
+        color: var(--gold);
+        margin-bottom: 1rem;
+    }
+
+    .service-card h5 {
+        color: var(--navy);
+        margin-bottom: 0.5rem;
+    }
+
+    .cta-banner {
+        background: linear-gradient(rgba(26, 58, 92, 0.85), rgba(26, 58, 92, 0.9)),
+                    url("https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=75") center/cover no-repeat fixed;
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #fff;
+        border-radius: 0.5rem;
+    }
+
+    .cta-banner h2 {
+        color: #fff;
+        font-size: 2.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .featured-food-img {
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .card-room img {
+        height: 220px;
+        object-fit: cover;
+    }
+</style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-public fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="http://127.0.0.1:8000/uploads/rooms/1790317416.png">
+                <i class="bi bi-gem me-2"></i>The Grand Hotel & Spa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic" aria-controls="navbarPublic" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarPublic">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://127.0.0.1:8000/uploads/rooms/1790317416.png">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/dining">Dining</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/conference">Conference</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/events">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/gallery">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-gold btn-sm mt-lg-1" href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms">Book Now</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="padding-top: 70px;">
+        <!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1>Welcome to Our Hotel</h1>
+        <p class="subtitle">Experience unparalleled luxury, comfort, and elegance in the heart of the city. Your perfect stay awaits.</p>
+        <a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms" class="btn btn-gold btn-lg">Find Your Room</a>
+    </div>
+</section>
+
+<!-- Featured Rooms -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Featured Rooms</h2>
+            <span class="gold-line"></span>
+            <p class="text-muted mt-2">Handpicked rooms for the finest experience</p>
+        </div>
+        <div class="row g-4">
+                            <div class="col-md-4">
+                    <div class="card card-room">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&amp;q=75" alt="Single Standard">
+                        <div class="card-body">
+                            <h5 class="card-title">Single Standard</h5>
+                            <p class="text-muted small">A comfortable single room with modern amenities, ideal for business travelers. F...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price">KES 3,500 <small class="text-muted">/ night</small></span>
+                                <a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms/1" class="btn btn-outline-gold btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-4">
+                    <div class="card card-room">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&amp;q=75" alt="Single Superior">
+                        <div class="card-body">
+                            <h5 class="card-title">Single Superior</h5>
+                            <p class="text-muted small">An upgraded single room with a king-sized bed, private balcony, and city views....</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price">KES 4,000 <small class="text-muted">/ night</small></span>
+                                <a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms/2" class="btn btn-outline-gold btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-4">
+                    <div class="card card-room">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&amp;q=75" alt="Double Standard">
+                        <div class="card-body">
+                            <h5 class="card-title">Double Standard</h5>
+                            <p class="text-muted small">A spacious double room with two queen beds, ideal for friends or couples. Includ...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price">KES 4,500 <small class="text-muted">/ night</small></span>
+                                <a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms/3" class="btn btn-outline-gold btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+    </div>
+</section>
+
+<!-- Featured Dining -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Featured Dining</h2>
+            <span class="gold-line"></span>
+            <p class="text-muted mt-2">Savor our culinary masterpieces</p>
+        </div>
+        <div class="row g-4">
+                            <div class="col-md-3">
+                    <div class="card card-room">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&amp;q=75" alt="Pilau ya Kuku" class="featured-food-img">
+                        <div class="card-body">
+                            <h5 class="card-title">Pilau ya Kuku</h5>
+                            <p class="text-muted small">Spiced rice cooked with chicken, served with kachumbari on t...</p>
+                            <span class="price">KES 750</span>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-3">
+                    <div class="card card-room">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&amp;q=75" alt="Nyama Choma" class="featured-food-img">
+                        <div class="card-body">
+                            <h5 class="card-title">Nyama Choma</h5>
+                            <p class="text-muted small">Half kilo of beef ribs grilled over charcoal with ugali and...</p>
+                            <span class="price">KES 950</span>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-3">
+                    <div class="card card-room">
+                        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&amp;q=75" alt="Chips Masala" class="featured-food-img">
+                        <div class="card-body">
+                            <h5 class="card-title">Chips Masala</h5>
+                            <p class="text-muted small">Fried potatoes tossed in masala sauce, served hot.</p>
+                            <span class="price">KES 350</span>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-3">
+                    <div class="card card-room">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&amp;q=75" alt="Kenyan AA Coffee" class="featured-food-img">
+                        <div class="card-body">
+                            <h5 class="card-title">Kenyan AA Coffee</h5>
+                            <p class="text-muted small">Single origin Kenyan AA, roasted medium and brewed to order.</p>
+                            <span class="price">KES 250</span>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Our Services</h2>
+            <span class="gold-line"></span>
+        </div>
+        <div class="row g-4">
+                                                <div class="col-md-3">
+                        <div class="service-card">
+                            <i class="bi bi-gem service-icon"></i>
+                            <h5>Conference Hall A</h5>
+                            <p class="text-muted small mb-0">Large conference facility seating 200 guests with projector, sound system, and a...</p>
+                        </div>
+                    </div>
+                                    <div class="col-md-3">
+                        <div class="service-card">
+                            <i class="bi bi-gem service-icon"></i>
+                            <h5>Conference Hall B</h5>
+                            <p class="text-muted small mb-0">Medium conference room for 50 guests, ideal for workshops and seminars.</p>
+                        </div>
+                    </div>
+                                    <div class="col-md-3">
+                        <div class="service-card">
+                            <i class="bi bi-gem service-icon"></i>
+                            <h5>Wedding Package</h5>
+                            <p class="text-muted small mb-0">Full wedding event coordination including catering, decoration, and sound.</p>
+                        </div>
+                    </div>
+                                    </div>
+    </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="py-5">
+    <div class="container">
+        <div class="cta-banner">
+            <h2>Ready for an Unforgettable Stay?</h2>
+            <p class="mb-4">Book your room today and experience luxury like never before.</p>
+            <a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms" class="btn btn-gold btn-lg">Book Your Room</a>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5><i class="bi bi-gem me-2"></i>The Grand Hotel & Spa</h5>
+                    <p class="text-secondary">Experience luxury and comfort in the heart of the city. Since 1985, we have been providing exceptional hospitality and unforgettable experiences for our guests.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png">Home</a></li>
+                        <li class="mb-2"><a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/rooms">Rooms & Suites</a></li>
+                        <li class="mb-2"><a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/dining">Dining</a></li>
+                        <li class="mb-2"><a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/conference">Conference</a></li>
+                        <li class="mb-2"><a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/events">Events</a></li>
+                        <li class="mb-2"><a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/gallery">Gallery</a></li>
+                        <li class="mb-2"><a href="http://127.0.0.1:8000/uploads/rooms/1790317416.png/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Info</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-gold"></i>123 Grand Avenue, Eldoret, Kenya</li>
+                        <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-gold"></i>+254 700 000 000</li>
+                        <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-gold"></i>info@grandhotel.co.ke</li>
+                        <li class="mb-2"><i class="bi bi-clock-fill me-2 text-gold"></i>Open 24 hours, 7 days a week</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Newsletter</h5>
+                    <p class="text-secondary">Subscribe to get special offers and updates.</p>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your email" aria-label="Email">
+                            <button class="btn btn-gold" type="submit"><i class="bi bi-send"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Grand Hotel & Spa. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

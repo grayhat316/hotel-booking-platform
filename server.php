@@ -6,39 +6,17 @@
  * @author   Taylor Otwell <taylorotwell@laravel.com>
  */
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| our application. We just need to utilize it! We'll require it into
-| the script here so that we do not have to worry about the loading of
-| any of our classes manually. Composer is responsible for loading
-| the rest.
-|
-*/
-require __DIR__.'/vendor/autoload.php';
+$publicPath = getcwd();
 
-$app = require_once __DIR__.'/bootstrap/app.php';
-
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request
-| through the kernel, and send the associated response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application prepared for them.
-|
-*/
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
+$uri = urldecode(
+    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? ''
 );
 
-$response->send();
+// This file allows us to emulate Apache's "mod_rewrite" functionality from the
+// built-in PHP web server. This provides a convenient way to test a Laravel
+// application without having installed a "real" web server software here.
+if ($uri !== '/' && file_exists($publicPath.$uri)) {
+    return false;
+}
 
-$kernel->terminate($request, $response);
+require_once $publicPath.'/index.php';

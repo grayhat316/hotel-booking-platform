@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,17 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     
     Route::resource('bookings', \App\Http\Controllers\Admin\BookingController::class)->except(['create', 'store']);
 });
+
+// Serve uploads through Laravel route (PHP serve doesn't serve public/ static files on Windows)
+Route::get('/uploads/{path}', function ($path) {
+    $file = public_path('uploads/' . $path);
+    if (!file_exists($file)) {
+        abort(404);
+    }
+    $content = file_get_contents($file);
+    $mimeType = mime_content_type($file);
+    return Response::make($content, 200, ['Content-Type' => $mimeType]);
+})->where('path', '.*');
 
 // Redirect /admin to dashboard
 Route::redirect('/admin', '/admin/dashboard');

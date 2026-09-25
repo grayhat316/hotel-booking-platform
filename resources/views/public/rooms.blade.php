@@ -41,7 +41,7 @@
             @forelse($rooms as $room)
                 <div class="col-lg-4 col-md-6">
                     <div class="card card-room">
-                        <img src="{{ $room->image && str_starts_with($room->image, 'http') ? $room->image : asset($room->image ? 'uploads/rooms/' . $room->image : 'images/room.svg') }}" alt="{{ $room->name }}">
+                        <img src="{{ $room->image_url }}" alt="{{ $room->name }}" class="card-room-img">
                         <div class="card-body">
                             <h5 class="card-title">{{ $room->name }}</h5>
                             <p class="text-muted small">{{ Str::limit($room->description, 100) }}</p>
