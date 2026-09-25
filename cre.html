@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Hotel Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a3a5c;
+            --navy-dark: #0f2540;
+            --gold: #c9a96e;
+            --gold-light: #d4af37;
+        }
+        
+        body { background: #f0f2f5; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        
+        /* Sidebar - Desktop */
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--navy-dark) 0%, var(--navy) 100%);
+            color: #fff;
+            position: fixed;
+            top: 0; left: 0;
+            width: 250px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar .brand {
+            padding: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar .brand .toggle-close {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.85);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        .sidebar .nav-link i {
+            width: 24px;
+            margin-right: 10px;
+        }
+        
+        /* Mobile overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        
+        .sidebar-overlay.show {
+            display: block;
+        }
+        
+        /* Main content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .topbar {
+            background: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .topbar .toggle-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--navy);
+            cursor: pointer;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .stat-card {
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+        }
+        .stat-card h3 { font-size: 2rem; font-weight: 700; margin: 0; }
+        .stat-card p { margin: 0; opacity: 0.9; font-size: 0.9rem; }
+        .stat-card-blue { background: linear-gradient(135deg, var(--navy), #2c5282); }
+        .stat-card-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); }
+        .stat-card-green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .stat-card-red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        
+        .btn-gold { background: var(--gold); border-color: var(--gold); color: #fff; }
+        .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); color: #fff; }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar .brand .toggle-close {
+                display: block;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .topbar .toggle-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="brand">
+            <span><i class="fas fa-hotel me-2"></i> Admin</span>
+            <button class="toggle-close" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav flex-column">
+            <li><a class="nav-link " href="http://127.0.0.1:8001/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a class="nav-link active" href="http://127.0.0.1:8001/admin/rooms"><i class="fas fa-bed"></i> Rooms</a></li>
+            <li><a class="nav-link " href="http://127.0.0.1:8001/admin/foods"><i class="fas fa-utensils"></i> Dining</a></li>
+            <li><a class="nav-link " href="http://127.0.0.1:8001/admin/services"><i class="fas fa-concierge-bell"></i> Services</a></li>
+            <li><a class="nav-link " href="http://127.0.0.1:8001/admin/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+            <li><a class="nav-link " href="http://127.0.0.1:8001/admin/bookings"><i class="fas fa-calendar-check"></i> Bookings</a></li>
+            <li class="mt-3"><a class="nav-link" href="http://127.0.0.1:8001" target="_blank"><i class="fas fa-external-link-alt"></i> View Site</a></li>
+            <li>
+                <form action="http://127.0.0.1:8001/logout" method="POST" class="nav-link">
+                    <input type="hidden" name="_token" value="eqBRNxyv0sKBRZ2t0N9IOq3SAUhZx8AJ4ZhLC6Cw" autocomplete="off">                    <button type="submit" class="btn btn-link text-warning p-0" style="text-decoration:none;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h5 class="mb-0">Create Room</h5>
+            </div>
+            <span class="text-muted"><i class="fas fa-user me-1"></i> Admin</span>
+        </div>
+
+                
+        <div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-plus-circle me-2"></i> Create New Room</h4>
+            </div>
+            <div class="card-body">
+                
+                <form action="http://127.0.0.1:8001/admin/rooms" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="eqBRNxyv0sKBRZ2t0N9IOq3SAUhZx8AJ4ZhLC6Cw" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">
+                            <i class="fas fa-tag me-1"></i> Room Name
+                        </label>
+                        <input type="text" class="form-control " id="name" name="name" value="" required>
+                                            </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">
+                            <i class="fas fa-align-left me-1"></i> Description
+                        </label>
+                        <textarea class="form-control " id="description" name="description" rows="3"></textarea>
+                                            </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">
+                            <i class="fas fa-dollar-sign me-1"></i> Price (per night)
+                        </label>
+                        <input type="number" step="0.01" class="form-control " id="price" name="price" value="" required>
+                                            </div>
+
+                    <div class="mb-3">
+                        <label for="capacity" class="form-label">
+                            <i class="fas fa-users me-1"></i> Capacity
+                        </label>
+                        <input type="number" class="form-control " id="capacity" name="capacity" value="" required>
+                                            </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-image me-1"></i> Room Image
+                        </label>
+                        
+                        <!-- Toggle Switch -->
+                        <div class="d-flex mb-3">
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="image_type" id="typeUpload" value="upload" checked>
+                                <label class="btn btn-outline-primary" for="typeUpload">
+                                    <i class="fas fa-upload me-1"></i> Upload File
+                                </label>
+                                
+                                <input type="radio" class="btn-check" name="image_type" id="typeUrl" value="url">
+                                <label class="btn btn-outline-primary" for="typeUrl">
+                                    <i class="fas fa-link me-1"></i> Paste URL
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Upload Input -->
+                        <div id="uploadSection">
+                            <input type="file" class="form-control " id="image" name="image" accept="image/*">
+                            <small class="text-muted">Upload a JPEG, PNG, GIF, or JPG file (max 2MB).</small>
+                                                    </div>
+
+                        <!-- URL Input -->
+                        <div id="urlSection" style="display: none;">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-link"></i></span>
+                                <input type="url" class="form-control " id="image_url" name="image_url" placeholder="https://example.com/image.jpg" value="">
+                            </div>
+                            <small class="text-muted">Paste a full URL (e.g., from Unsplash, Google Images).</small>
+                                                    </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Save Room
+                        </button>
+                        <a href="http://127.0.0.1:8001/admin/rooms" class="btn btn-secondary">
+                            <i class="fas fa-times me-1"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+        
+        // Close sidebar when clicking overlay
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const typeUpload = document.getElementById('typeUpload');
+        const typeUrl = document.getElementById('typeUrl');
+        const uploadSection = document.getElementById('uploadSection');
+        const urlSection = document.getElementById('urlSection');
+
+        typeUpload.addEventListener('change', function() {
+            if (this.checked) {
+                uploadSection.style.display = 'block';
+                urlSection.style.display = 'none';
+            }
+        });
+
+        typeUrl.addEventListener('change', function() {
+            if (this.checked) {
+                uploadSection.style.display = 'none';
+                urlSection.style.display = 'block';
+            }
+        });
+    });
+</script>
+</body>
+</html>

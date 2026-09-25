@@ -35,7 +35,7 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'capacity' => 'required|integer|min:1',
-            'image' => 'nullable|string|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image_url' => 'nullable|url|max:2048',
         ]);
 
@@ -49,6 +49,9 @@ class RoomController extends Controller
             $image->move(public_path('uploads/rooms'), $imageName);
             $data['image'] = 'uploads/rooms/' . $imageName;
         }
+
+        unset($data['image_url']);
+        unset($data['image_type']);
 
         Room::create($data);
 
@@ -82,7 +85,7 @@ class RoomController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'capacity' => 'required|integer|min:1',
-            'image' => 'nullable|string|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image_url' => 'nullable|url|max:2048',
         ]);
 
@@ -91,7 +94,7 @@ class RoomController extends Controller
         if ($request->has('image_url') && $request->input('image_url')) {
             $data['image'] = $request->input('image_url');
         } elseif ($request->hasFile('image')) {
-            // Delete old image if exists
+            // Delete old local image if exists
             if ($room->image && !str_starts_with($room->image, 'http') && file_exists(public_path($room->image))) {
                 unlink(public_path($room->image));
             }
@@ -102,6 +105,9 @@ class RoomController extends Controller
         } else {
             unset($data['image']);
         }
+
+        unset($data['image_url']);
+        unset($data['image_type']);
 
         $room->update($data);
 
@@ -114,7 +120,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        if ($room->image && file_exists(public_path($room->image))) {
+        if ($room->image && !str_starts_with($room->image, 'http') && file_exists(public_path($room->image))) {
             unlink(public_path($room->image));
         }
         $room->delete();
