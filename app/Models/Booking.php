@@ -45,17 +45,17 @@ class Booking extends Model
      */
     public function getImageUrlAttribute()
     {
-        // If booking has a room with a featured image
+        // Use the room's image accessor
         if ($this->room && $this->room->image) {
-            return asset('storage/' . $this->room->image);
+            return $this->room->image_url;
         }
 
-        // Fallback to gallery first image
+        // Fallback to first gallery image's accessor
         $galleryImage = \App\Models\Gallery::first();
         if ($galleryImage && $galleryImage->image) {
-            return asset('storage/' . $galleryImage->image);
+            return $galleryImage->image_url;
         }
 
-        return asset('images/placeholder.jpg');
+        return asset('images/room.svg');
     }
 }

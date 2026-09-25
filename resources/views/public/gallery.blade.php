@@ -144,10 +144,10 @@
         <div class="gallery-grid">
             @forelse($gallery as $item)
                 <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#lightboxModal"
-                     data-image="{{ $item->image && str_starts_with($item->image, 'http') ? $item->image : asset($item->image ? 'uploads/gallery/' . $item->image : 'images/gallery.svg') }}"
-                     data-title="{{ $item->title }}"
-                     data-description="{{ $item->description }}">
-                    <img src="{{ $item->image && str_starts_with($item->image, 'http') ? $item->image : asset($item->image ? 'uploads/gallery/' . $item->image : 'images/gallery.svg') }}" alt="{{ $item->title }}" loading="lazy">
+                                     data-image="{{ $item->image_url }}"
+                                     data-title="{{ $item->title }}"
+                                     data-description="{{ $item->description }}">
+                                    <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy">
                     <div class="overlay">
                         <h5>{{ $item->title }}</h5>
                         @if($item->description)

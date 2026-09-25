@@ -95,7 +95,7 @@
             @forelse($foods as $food)
                 <div class="col-lg-3 col-md-4 col-sm-6 food-item" data-category="{{ $food->category }}">
                     <div class="card card-room position-relative">
-                        <img src="{{ $food->image && str_starts_with($food->image, 'http') ? $food->image : asset($food->image ? 'uploads/foods/' . $food->image : 'images/food.svg') }}" alt="{{ $food->name }}" class="food-img">
+                        <img src="{{ $food->image_url }}" alt="{{ $food->name }}" class="food-img">
                         <span class="badge bg-gold category-badge">{{ $food->category }}</span>
                         <div class="card-body">
                             <h5 class="card-title">{{ $food->name }}</h5>

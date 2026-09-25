@@ -24,7 +24,7 @@ class DashboardController extends Controller
             'confirmed_bookings' => Booking::where('status', 'confirmed')->count(),
         ];
 
-        $recentBookings = Booking::with(['user', 'room'])
+        $recentBookings = Booking::with('room')
             ->latest()
             ->take(5)
             ->get();

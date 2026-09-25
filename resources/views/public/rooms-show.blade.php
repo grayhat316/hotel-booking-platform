@@ -58,7 +58,7 @@
         <div class="row g-5">
             <!-- Image -->
             <div class="col-lg-7">
-                <img src="{{ $room->image && str_starts_with($room->image, 'http') ? $room->image : asset($room->image ? 'uploads/rooms/' . $room->image : 'images/room.svg') }}" alt="{{ $room->name }}" class="room-detail-img">
+                <img src="{{ $room->image_url }}" alt="{{ $room->name }}" class="room-detail-img">
             </div>
             <!-- Info -->
             <div class="col-lg-5">
@@ -109,7 +109,7 @@
             @foreach($relatedRooms as $related)
                 <div class="col-md-4">
                     <div class="card card-room">
-                        <img src="{{ $related->image && str_starts_with($related->image, 'http') ? $related->image : asset($related->image ? 'uploads/rooms/' . $related->image : 'images/room.svg') }}" alt="{{ $related->name }}" class="related-img">
+                        <img src="{{ $related->image_url }}" alt="{{ $related->name }}" class="related-img">
                         <div class="card-body">
                             <h5 class="card-title">{{ $related->name }}</h5>
                             <p class="text-muted small">{{ Str::limit($related->description, 80) }}</p>

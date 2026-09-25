@@ -106,8 +106,8 @@ active
                             <td><strong>#{{ $booking->id }}</strong></td>
                             <td>
                                 <a href="{{ url('/admin/bookings/' . $booking->id) }}" class="text-decoration-none fw-semibold">
-                                    {{ $booking->user->name ?? 'N/A' }}
-                                </a>
+                                                                    {{ $booking->guest_name }}
+                                                                </a>
                             </td>
                             <td>{{ $booking->room->name ?? 'N/A' }}</td>
                             <td>{{ \Carbon\Carbon::parse($booking->check_in)->format('M d, Y') }}</td>
