@@ -56,6 +56,14 @@
         margin-bottom: 0.5rem;
     }
 
+    .service-img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
     .cta-banner {
         background: linear-gradient(rgba(26, 58, 92, 0.85), rgba(26, 58, 92, 0.9)),
                     url("https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=75") center/cover no-repeat fixed;
@@ -163,15 +171,19 @@
         </div>
         <div class="row g-4">
             @if(isset($services) && count($services) > 0)
-                @foreach($services as $service)
-                    <div class="col-md-3">
-                        <div class="service-card">
-                            <i class="bi bi-gem service-icon"></i>
-                            <h5>{{ $service->name }}</h5>
-                            <p class="text-muted small mb-0">{{ Str::limit($service->description, 80) }}</p>
+                    @foreach($services as $service)
+                        <div class="col-md-3">
+                            <div class="service-card">
+                                @if($service->image)
+                                    <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="service-img">
+                                @else
+                                    <i class="bi bi-gem service-icon"></i>
+                                @endif
+                                <h5>{{ $service->name }}</h5>
+                                <p class="text-muted small mb-0">{{ Str::limit($service->description, 80) }}</p>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
             @else
                 <div class="col-md-3">
                     <div class="service-card">
