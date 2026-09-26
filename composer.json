@@ -38,7 +38,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php scripts/setup_env.php",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
