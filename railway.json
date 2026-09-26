@@ -1,0 +1,23 @@
+{
+  "build": {
+    "dockerfilePath": "Dockerfile"
+  },
+  "deploy": {
+    "production": {
+      "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_KEY": "base64:HyVopAK4Ygz0zLtHN3RUzzs+9zZ4OaVJBfYl0ccGAnQ=",
+        "APP_URL": "https://hotel-booking-platform-production.up.railway.app",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "database/database.sqlite",
+        "CACHE_DRIVER": "file",
+        "SESSION_DRIVER": "file",
+        "QUEUE_CONNECTION": "sync",
+        "FILESYSTEM_DISK": "local",
+        "LOG_CHANNEL": "stack",
+        "LOG_LEVEL": "debug"
+      }
+    }
+  }
+}
