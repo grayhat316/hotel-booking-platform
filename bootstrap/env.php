@@ -1,10 +1,25 @@
 <?php
 
-// Auto-generate .env if it doesn't exist (for deployments without .env)
+// Auto-generate .env if it doesn't exist (for deployment environments)
 $envPath = __DIR__ . '/../.env';
-if (!file_exists($envPath)) {
+if (!file_exists($envPath) || filesize($envPath) === 0) {
     $appKey = 'base64:' . base64_encode(random_bytes(32));
-    $appUrl = getenv('APP_URL') ?: 'http://localhost';
+    
+    // Detect the app URL from the actual request
+    $appUrl = 'http://localhost';
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        $appUrl = 'https://' . $_SERVER['HTTP_HOST'];
+    } elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+        $appUrl = 'https://' . $_SERVER['HTTP_HOST'];
+    } elseif (isset($_SERVER['HTTP_HOST'])) {
+        $appUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'];
+    }
+    
+    // Check for Railway-specific URL
+    $railwayUrl = getenv('RAILWAY_STATIC_URL') ?: getenv('RAILWAY_APP_URL');
+    if ($railwayUrl) {
+        $appUrl = $railwayUrl;
+    }
 
     $env = <<<ENV
 APP_NAME=Laravel
@@ -49,14 +64,14 @@ PUSHER_APP_CLUSTER=mt1
 VITE_APP_NAME="\${APP_NAME}"
 ENV;
 
-    file_put_contents($envPath, $env);
+    @file_put_contents($envPath, $env);
 }
 
 // Ensure SQLite database exists
 $dbPath = __DIR__ . '/../database/database.sqlite';
 if (!file_exists(dirname($dbPath))) {
-    mkdir(dirname($dbPath), 0755, true);
+    @mkdir(dirname($dbPath), 0755, true);
 }
 if (!file_exists($dbPath)) {
-    touch($dbPath);
+    @touch($dbPath);
 }
