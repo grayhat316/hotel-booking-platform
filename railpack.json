@@ -1,5 +1,8 @@
 {
   "build": {
+    "onBoot": {
+      "runImages": false
+    },
     "dockerfilePath": "Dockerfile"
   }
 }
