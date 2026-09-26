@@ -1,7 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/railway.json",
   "build": {
-    "buildCommand": "composer install --no-dev --optimize-autoloader --no-interaction && php artisan key:generate --force && php artisan config:cache && php artisan route:cache",
-    "outputDir": "public"
+    "dockerfilePath": "Dockerfile"
   }
 }
