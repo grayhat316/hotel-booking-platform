@@ -51,6 +51,8 @@ class ServiceController extends Controller
             $data['image'] = 'uploads/services/' . $imageName;
         }
 
+        unset($data['image_url']);
+        unset($data['image_type']);
         Service::create($data);
 
         return redirect()->route('admin.services.index')
