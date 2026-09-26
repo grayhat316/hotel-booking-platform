@@ -4,8 +4,8 @@ public/storage/
 storage/
 vendor/
 bootstrap/cache/
-.env
-.env.backup
+#.env
+!.env
 .env.production
 .phpunit.result.cache
 docker-compose.overage.xml
