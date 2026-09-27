@@ -22,7 +22,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Create required directories
-RUN mkdir -p bootstrap/cache storage/framework/cache/data storage/framework/views storage/framework/sessions storage/logs database
+RUN mkdir -p bootstrap/cache storage/framework/cache/data storage/framework/views storage/framework/sessions storage/logs database storage/app/public uploads/rooms uploads/foods uploads/services uploads/gallery
 
 # Create .env from .env.example if it doesn't exist
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
@@ -39,8 +39,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Create SQLite database
 RUN mkdir -p database && touch database/database.sqlite
 
-RUN mkdir -p bootstrap/cache storage/framework/cache/data storage/framework/views storage/framework/sessions storage/logs database storage/app/public uploads/rooms uploads/foods uploads/services uploads/gallery
-
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database && \
@@ -48,7 +46,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
     chmod 666 /var/www/html/database/database.sqlite
 
 # Enable Apache mod_rewrite
-RUN a2enmod rewrite
+RUN a2enmod rewrite && \
+    a2dismod mpm_event mpm_worker || true
 
 EXPOSE 80
 
