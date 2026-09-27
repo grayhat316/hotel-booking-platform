@@ -5,6 +5,8 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libsqlite3-dev \
+    pkg-config \
     zip \
     unzip \
     && docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd \
@@ -25,9 +27,11 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Create .env from .env.example if it doesn't exist
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
-# Generate APP_KEY
-RUN APP_KEY=$(php -r "echo base64_encode(random_bytes(32));") && \
-    sed -i "s/APP_KEY=/APP_KEY=base64:${APP_KEY}/" .env
+# Generate APP_KEY if missing
+RUN if ! grep -q '^APP_KEY=base64:' .env; then \
+    APP_KEY=$(php -r "echo base64_encode(random_bytes(32));") && \
+    sed -i "s/^APP_KEY=.*/APP_KEY=base64:${APP_KEY}/" .env; \
+fi
 
 # Create SQLite database
 RUN mkdir -p database && touch database/database.sqlite
