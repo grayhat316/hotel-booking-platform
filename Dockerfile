@@ -42,15 +42,17 @@ RUN mkdir -p database && touch database/database.sqlite
 RUN mkdir -p bootstrap/cache storage/framework/cache/data storage/framework/views storage/framework/sessions storage/logs database storage/app/public uploads/rooms uploads/foods uploads/services uploads/gallery
 
 # Set permissions for Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
-    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database && \
     chmod 775 /var/www/html/storage/app/public /var/www/html/uploads && \
     chmod 666 /var/www/html/database/database.sqlite
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Cache config
-RUN php artisan config:cache
-
 EXPOSE 80
+
+# Use entrypoint to run migrations and start Apache
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
