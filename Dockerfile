@@ -45,9 +45,10 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
     chmod 775 /var/www/html/storage/app/public /var/www/html/uploads && \
     chmod 666 /var/www/html/database/database.sqlite
 
-# Enable Apache mod_rewrite
+# Enable Apache mod_rewrite and fix MPM conflict
 RUN a2enmod rewrite && \
-    a2dismod mpm_event mpm_worker || true
+    a2dismod mpm_event mpm_worker 2>/dev/null || true && \
+    a2enmod mpm_prefork
 
 EXPOSE 80
 
