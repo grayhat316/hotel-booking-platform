@@ -46,3 +46,9 @@ if (!is_dir($dbDir)) {
 if (!file_exists($dbPath)) {
     touch($dbPath);
 }
+
+// Ensure DB_DATABASE in .env uses absolute path (required on Windows)
+$absoluteDbPath = realpath($dbPath);
+if ($absoluteDbPath) {
+    $env = preg_replace('/^DB_DATABASE=.+$/m', 'DB_DATABASE=' . $absoluteDbPath, $env);
+}

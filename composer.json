@@ -9,14 +9,13 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "nunomaduro/collision": "^7.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
-        "laravel/pint": "1.20.0",
-        "laravel/sail": "^1.18",
+        "laravel/pint": "^1.20",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
         "symfony/css-selector": "^6.4",
         "tijsverkoyen/css-to-inline-styles": "^2.2"
@@ -38,12 +37,9 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "@php scripts/setup_env.php",
-            "@php artisan package:discover --ansi"
+            "@php scripts/setup_env.php"
         ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
+        "post-update-cmd": [],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
@@ -51,10 +47,7 @@
             "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php artisan key:generate --force --ansi",
-            "@php artisan config:cache --no-interaction",
-            "@php artisan route:cache --no-interaction"
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ]
     },
     "config": {
@@ -76,6 +69,9 @@
     "extra": {
         "security": {
             "advisories.ignore": ["PKSA-m5cs-t1y6-qpcs", "PKSA-3r5d-mb8f-1qw9", "PKSA-mdq4-51ck-6kdq", "PKSA-8qx3-n5y5-vvnd", "PKSA-w7xr-vk7n-rstm"]
+        },
+        "laravel": {
+            "dont-discover": ["nunomaduro/collision", "laravel/sail"]
         }
     }
 }

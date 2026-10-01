@@ -3,8 +3,7 @@ node_modules/
 public/storage/
 vendor/
 bootstrap/cache/
-#.env
-!.env
+.env
 .env.production
 .phpunit.result.cache
 docker-compose.overage.xml
