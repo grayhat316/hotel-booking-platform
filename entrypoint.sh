@@ -5,6 +5,12 @@ echo "=== Railway Entrypoint Starting ==="
 echo "DATABASE_URL present: ${DATABASE_URL:+YES}"
 echo "DATABASE_URL value: ${DATABASE_URL:-NOT_SET}"
 
+# Ensure .env exists (copy from .env.example if needed)
+if [ ! -f .env ]; then
+    echo "Creating .env from .env.example..."
+    cp .env.example .env
+fi
+
 # Parse DATABASE_URL and write individual DB vars to .env (more reliable than DATABASE_URL)
 if [ -n "$DATABASE_URL" ]; then
     echo "Parsing DATABASE_URL..."
