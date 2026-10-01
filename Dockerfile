@@ -30,7 +30,7 @@ RUN if [ ! -f .env ]; then cp .env.example .env; fi
 # Generate APP_KEY if missing
 RUN if ! grep -q '^APP_KEY=base64:' .env; then \
     APP_KEY=$(php -r "echo base64_encode(random_bytes(32));") && \
-    sed -i "s/^APP_KEY=.*/APP_KEY=base64:${APP_KEY}/" .env; \
+    sed -i "s|^APP_KEY=.*|APP_KEY=base64:${APP_KEY}|" .env; \
 fi
 
 # Install dependencies (production only)
