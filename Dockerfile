@@ -42,14 +42,15 @@ RUN mkdir -p \
     uploads/gallery
 
 # Fix Apache MPM - disable ALL other MPMs, enable ONLY prefork
-# Also remove any LoadModule lines from apache2.conf
+# Remove all MPM load modules from apache2.conf and mods-enabled
 RUN a2dismod mpm_event mpm_worker mpm_prefork 2>/dev/null; \
-    a2enmod mpm_prefork; \
-    a2enmod rewrite; \
     # Remove any MPM LoadModule lines from apache2.conf
     sed -i '/LoadModule mpm_/d' /etc/apache2/apache2.conf; \
-    # Ensure prefork is loaded
-    echo "LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so" >> /etc/apache2/apache2.conf
+    # Remove any MPM config files from mods-enabled
+    rm -f /etc/apache2/mods-enabled/mpm_*.conf /etc/apache2/mods-enabled/mpm_*.load 2>/dev/null; \
+    # Enable ONLY prefork
+    a2enmod mpm_prefork; \
+    a2enmod rewrite
 
 # Copy and setup entrypoint
 COPY entrypoint.sh /usr/local/bin/
